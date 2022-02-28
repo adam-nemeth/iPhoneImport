@@ -12,9 +12,14 @@ The script uses Windows Shell operations to copy the files.
 
 I back my photos on my phone up regularly to my Windows PC, I wanted to have a one click solution to do so.
 
-## Dependencies
+## Prerequisites
 
-To be able to use this script, please install Python 3.10 or later.
+To be able to use this script, please perform the following steps:
+
+   1. Install Python 3.10 from the Microsoft Store 
+   2. Install PyWin32 using the following command: 
+ 
+    pip install pywin32
 
 ## How to use
 
