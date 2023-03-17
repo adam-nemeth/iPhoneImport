@@ -2,10 +2,16 @@ import argparse
 import glob
 import os
 import pathlib
+import re
 from datetime import datetime
 
 import win32utils
 from win32utils import CopyParams
+
+
+# changes "a" to "_" in "202301_a\IMG_1694.HEIC"
+def remove_letter_suffix_from_folder(filePath):
+    return re.sub("_[a-z]\\\\", "__\\\\", filePath)
 
 
 # Loads paths of already imported files into a set
@@ -21,7 +27,9 @@ def load_already_imported_file_names(metadata_folder):
                 print(f"Loading imported file list from '{filename}'")
                 with open(filename, "r") as file:
                     for line in file:
-                        already_imported_files_set.add(line.strip())
+                        filename = line.strip()
+                        amendedFilename = remove_letter_suffix_from_folder(filename)
+                        already_imported_files_set.add(amendedFilename)
     print(f"Loaded {len(already_imported_files_set)} imported files")
     return already_imported_files_set
 
@@ -37,9 +45,10 @@ def resolve_items_to_import(source_folder_absolute_display_name, source_shell_it
         source_file_absolute_path = win32utils.get_absolute_name(source_file_shell_item)
         file_relative_path = remove_prefix(source_file_absolute_path, source_folder_absolute_display_name)
         file_relative_path = remove_prefix(file_relative_path, '\\')
-        if file_relative_path not in already_imported_files_set:
+        amended_file_path = remove_letter_suffix_from_folder(file_relative_path)
+        if amended_file_path not in already_imported_files_set:
             shell_items_to_copy[file_relative_path] = source_file_shell_item
-            imported_file_set.add(file_relative_path)
+            imported_file_set.add(amended_file_path)
         else:
             not_imported_file_set.add(file_relative_path)
     return imported_file_set, not_imported_file_set, shell_items_to_copy
@@ -96,8 +105,8 @@ def main(args):
 
     print(f"Import {len(imported_file_set)} files")
 
-    if args.dry_run:
-        print(f"dry-run mode, skipping copying")
+    if args.skip_copy:
+        print(f"skip-copy mode, skipping copying")
     elif len(shell_items_to_copy_by_target_path) > 0:
         copy_using_windows_shell(shell_items_to_copy_by_target_path, destination_path_str)
     else:
@@ -112,5 +121,5 @@ if __name__ == "__main__":
     parser.add_argument('source')
     parser.add_argument('destination')
     parser.add_argument('--metadata-folder', required=False)
-    parser.add_argument('--dry-run', required=False, action='store_true')
+    parser.add_argument('--skip-copy', required=False, action='store_true')
     main(parser.parse_args())

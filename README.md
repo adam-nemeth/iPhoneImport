@@ -36,4 +36,4 @@ Copy **new** files from the phone to a folder (i.e. skip the ones already copied
 
 **Dry-run** mode: skip copying, write metadata only
 
-    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage\DCIM" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata --dry-run
+    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage\DCIM" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata --skip-copy
