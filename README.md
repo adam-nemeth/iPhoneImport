@@ -28,12 +28,12 @@ commands:
 
 Copy **all files** from the phone to a folder:
 
-    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage\DCIM" "C:\Pictures\iPhone\import"
+    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage" "C:\Pictures\iPhone\import"
 
 Copy **new** files from the phone to a folder (i.e. skip the ones already copied):
 
-    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage\DCIM" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata
+    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata
 
 **Dry-run** mode: skip copying, write metadata only
 
-    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage\DCIM" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata --skip-copy
+    python C:\Scripts\iPhoneImport "This PC\Apple iPhone\Internal Storage" "C:\Pictures\iPhone\import" --metadata-folder d:\Pictures\iPhone\import\metadata --skip-copy
